@@ -42,22 +42,26 @@ export default function App() {
 
   const login = ({ username, password }) => {
     setMessage("");
-    setSpinnerOn(true);
+    // setSpinnerOn(true);
 
     axios
       .post(loginUrl, { username, password })
       .then((resp) => {
         localStorage.setItem("token", resp.data.token);
         // console.log("Token1:", resp.data.token);
-        setMessage(`Here are your articles, ${username}!`);
-        setSpinnerOn(false);
+        setMessage(resp.data.message);
+        // setSpinnerOn(false);
         redirectToArticles();
+        setSpinnerOn(true);
         // console.log("Token2:", resp.data.token);
       })
       .catch((err) => {
-        setMessage("Login failed. Please check your credentials.");
-        setSpinnerOn(false);
+        setMessage("resp.data.message");
+        // setSpinnerOn(false);
         console.log("Error: ", err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
       });
     // ✨ implement
     // We should flush the message state, turn on the spinner
@@ -69,7 +73,7 @@ export default function App() {
 
   const getArticles = () => {
     setMessage("");
-    setSpinnerOn(true);
+    // setSpinnerOn(true);
 
     axiosWithAuth()
       .get(articlesUrl)
@@ -78,16 +82,17 @@ export default function App() {
         setArticles(resp.data.articles);
 
         console.log("1: ", resp.data.articles);
+        console.log("2: ", resp);
         // localStorage.setItem("token", resp.data.token);
-        setMessage(`Here are your articles, ${username}!`);
-        console.log("2: ", resp.data.articles);
+        setMessage(resp.data.message);
+        // console.log("2: ", resp.data.articles);
         // redirectToArticles();
       })
       .catch((err) => {
         redirectToLogin();
-        setMessage("Login failed. Please check your credentials.");
+        setMessage("resp.data.message");
         setSpinnerOn(false);
-        console.log("Error: ", err);
+        console.log("getArticleError: ", err);
       });
     // ✨ implement
     // We should flush the message state, turn on the spinner

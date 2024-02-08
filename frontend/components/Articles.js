@@ -26,7 +26,7 @@ export default function Articles({
     return <Navigate to="/" />;
   }
   // console.log("Token3:", token);
-  console.log("Type of articles:", typeof articles);
+  // console.log("Type of articles:", typeof articles);
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
