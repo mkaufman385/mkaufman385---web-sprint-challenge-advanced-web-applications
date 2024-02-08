@@ -13,14 +13,12 @@ export default function LoginForm({ login }) {
   const onChange = (evt) => {
     const { id, value } = evt.target;
     setValues({ ...values, [id]: value });
-    // console.log("Updated values:", values);
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
     // ✨ implement
     login(values);
-    console.log("IFV: ", initialFormValues);
   };
 
   const isDisabled = () => {

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import { axiosWithAuth } from "../axios/index";
 import PT from "prop-types";
 
 export default function Articles({
@@ -9,7 +10,7 @@ export default function Articles({
   setCurrentArticleId,
   currentArticleId,
 }) {
-  console.log("Type of articles:", typeof articles);
+  // console.log("Type of articles:", typeof articles);
   // ✨ where are my props? Destructure them here
 
   // ✨ implement conditional logic: if no token exists
@@ -24,6 +25,8 @@ export default function Articles({
   if (!localStorage.getItem("token")) {
     return <Navigate to="/" />;
   }
+  // console.log("Token3:", token);
+  console.log("Type of articles:", typeof articles);
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions

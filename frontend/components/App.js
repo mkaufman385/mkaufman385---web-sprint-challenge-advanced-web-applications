@@ -48,9 +48,11 @@ export default function App() {
       .post(loginUrl, { username, password })
       .then((resp) => {
         localStorage.setItem("token", resp.data.token);
+        // console.log("Token1:", resp.data.token);
         setMessage(`Here are your articles, ${username}!`);
         setSpinnerOn(false);
         redirectToArticles();
+        // console.log("Token2:", resp.data.token);
       })
       .catch((err) => {
         setMessage("Login failed. Please check your credentials.");
@@ -72,17 +74,18 @@ export default function App() {
     axiosWithAuth()
       .get(articlesUrl)
       .then((resp) => {
+        redirectToArticles();
         setArticles(resp.data.articles);
 
-        console.log(resp);
-        localStorage.setItem("token", resp.data.token);
+        console.log("1: ", resp.data.articles);
+        // localStorage.setItem("token", resp.data.token);
         setMessage(`Here are your articles, ${username}!`);
-
-        redirectToArticles();
+        console.log("2: ", resp.data.articles);
+        // redirectToArticles();
       })
       .catch((err) => {
         redirectToLogin();
-        // setMessage("Login failed. Please check your credentials.");
+        setMessage("Login failed. Please check your credentials.");
         setSpinnerOn(false);
         console.log("Error: ", err);
       });
