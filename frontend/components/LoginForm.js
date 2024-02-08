@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import PT from "prop-types";
+// import App from App.js
 
 const initialFormValues = {
   username: "",
   password: "",
 };
-export default function LoginForm(props) {
+export default function LoginForm({ login }) {
   const [values, setValues] = useState(initialFormValues);
   // ✨ where are my props? Destructure them here
 
   const onChange = (evt) => {
     const { id, value } = evt.target;
     setValues({ ...values, [id]: value });
-    console.log("Updated values:", values);
+    // console.log("Updated values:", values);
   };
 
   const onSubmit = (evt) => {

@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 import Message from "./Message";
 import ArticleForm from "./ArticleForm";
 import Spinner from "./Spinner";
-import axiosWithAuth from "../axios/index.js";
+import { axiosWithAuth } from "../axios/index";
 import axios from "axios";
 
 const articlesUrl = "http://localhost:9000/api/articles";
@@ -36,8 +36,8 @@ export default function App() {
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
     localStorage.removeItem("token");
+    redirectToLogin();
     setMessage("Goodbye!");
-    navigate("/");
   };
 
   const login = ({ username, password }) => {
@@ -50,7 +50,7 @@ export default function App() {
         localStorage.setItem("token", resp.data.token);
         setMessage(`Here are your articles, ${username}!`);
         setSpinnerOn(false);
-        navigate("/articles");
+        redirectToArticles();
       })
       .catch((err) => {
         setMessage("Login failed. Please check your credentials.");
@@ -66,6 +66,26 @@ export default function App() {
   };
 
   const getArticles = () => {
+    setMessage("");
+    setSpinnerOn(true);
+
+    axiosWithAuth()
+      .get(articlesUrl)
+      .then((resp) => {
+        setArticles(resp.data.articles);
+
+        console.log(resp);
+        localStorage.setItem("token", resp.data.token);
+        setMessage(`Here are your articles, ${username}!`);
+
+        redirectToArticles();
+      })
+      .catch((err) => {
+        redirectToLogin();
+        // setMessage("Login failed. Please check your credentials.");
+        setSpinnerOn(false);
+        console.log("Error: ", err);
+      });
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch an authenticated request to the proper endpoint.
