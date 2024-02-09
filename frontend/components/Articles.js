@@ -18,15 +18,13 @@ export default function Articles({
 
   useEffect(() => {
     getArticles();
-    console.log("Received articles:", articles);
+    console.log("Articles UseEffect:", articles);
     // ✨ grab the articles here, on first render only
   }, []);
 
   if (!localStorage.getItem("token")) {
     return <Navigate to="/" />;
   }
-  // console.log("Token3:", token);
-  // console.log("Type of articles:", typeof articles);
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions

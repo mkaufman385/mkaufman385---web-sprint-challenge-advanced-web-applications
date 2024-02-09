@@ -42,7 +42,7 @@ export default function App() {
 
   const login = ({ username, password }) => {
     setMessage("");
-    // setSpinnerOn(true);
+    setSpinnerOn(true);
 
     axios
       .post(loginUrl, { username, password })
@@ -52,7 +52,7 @@ export default function App() {
         setMessage(resp.data.message);
         // setSpinnerOn(false);
         redirectToArticles();
-        setSpinnerOn(true);
+        // setSpinnerOn(true);
         // console.log("Token2:", resp.data.token);
       })
       .catch((err) => {
@@ -81,8 +81,8 @@ export default function App() {
         redirectToArticles();
         setArticles(resp.data.articles);
 
-        console.log("1: ", resp.data.articles);
-        console.log("2: ", resp);
+        console.log("getArticlesResponse: ", resp.data.articles);
+        // console.log("2: ", resp);
         // localStorage.setItem("token", resp.data.token);
         setMessage(resp.data.message);
         // console.log("2: ", resp.data.articles);
@@ -90,7 +90,7 @@ export default function App() {
       })
       .catch((err) => {
         redirectToLogin();
-        setMessage("resp.data.message");
+        setMessage(err.message);
         setSpinnerOn(false);
         console.log("getArticleError: ", err);
       });
@@ -105,6 +105,24 @@ export default function App() {
   };
 
   const postArticle = (article) => {
+    // setMessage("");
+    setSpinnerOn(true);
+
+    axiosWithAuth()
+      .post(articlesUrl, article)
+      .then((resp) => {
+        console.log("postArticleResp: ", resp);
+        setMessage(resp.data.message);
+        getArticles();
+        // console.log("postArticleResp: ", resp);
+      })
+      .catch((err) => {
+        setMessage(err.message);
+        console.log("postArticleErr: ", err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
+      });
     // ✨ implement
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
