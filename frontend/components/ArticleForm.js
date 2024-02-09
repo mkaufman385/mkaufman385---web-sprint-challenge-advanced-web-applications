@@ -7,7 +7,8 @@ export default function ArticleForm(
   postArticle,
   updateArticle,
   setCurrentArticleId,
-  currentArticle
+  currentArticle,
+  currentArticleId
 ) {
   const [values, setValues] = useState(initialFormValues);
   // ✨ where are my props? Destructure them here

@@ -3,13 +3,14 @@ import { Navigate } from "react-router-dom";
 import { axiosWithAuth } from "../axios/index";
 import PT from "prop-types";
 
-export default function Articles({
-  articles,
-  getArticles,
-  deleteArticle,
-  setCurrentArticleId,
-  currentArticleId,
-}) {
+export default function Articles(props) {
+  const {
+    articles,
+    getArticles,
+    deleteArticle,
+    setCurrentArticleId,
+    currentArticleId,
+  } = props;
   // console.log("Type of articles:", typeof articles);
   // ✨ where are my props? Destructure them here
 
@@ -31,9 +32,9 @@ export default function Articles({
     // and use the articles prop to generate articles
     <div className="articles">
       <h2>Articles</h2>
-      {![].length
+      {!articles.length
         ? "No articles yet"
-        : [].map((art) => {
+        : articles.map((art) => {
             return (
               <div className="article" key={art.article_id}>
                 <div>

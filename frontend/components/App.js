@@ -72,21 +72,13 @@ export default function App() {
   };
 
   const getArticles = () => {
-    setMessage("");
-    // setSpinnerOn(true);
-
     axiosWithAuth()
       .get(articlesUrl)
       .then((resp) => {
-        redirectToArticles();
         setArticles(resp.data.articles);
 
         console.log("getArticlesResponse: ", resp.data.articles);
-        // console.log("2: ", resp);
-        // localStorage.setItem("token", resp.data.token);
         setMessage(resp.data.message);
-        // console.log("2: ", resp.data.articles);
-        // redirectToArticles();
       })
       .catch((err) => {
         redirectToLogin();
@@ -168,12 +160,14 @@ export default function App() {
                   postArticle={postArticle}
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
                 />
                 <Articles
                   articles={articles}
                   getArticles={getArticles}
                   deleteArticle={deleteArticle}
                   setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
                 />
               </>
             }
