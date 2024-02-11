@@ -12,7 +12,6 @@ const articlesUrl = "http://localhost:9000/api/articles";
 const loginUrl = "http://localhost:9000/api/login";
 
 export default function App() {
-  // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState("");
   const [articles, setArticles] = useState([]);
   const [currentArticleId, setCurrentArticleId] = useState();
@@ -122,12 +121,46 @@ export default function App() {
   };
 
   const updateArticle = ({ article_id, article }) => {
+    const { title, text, topic } = article;
+
+    if (
+      !title.trim() ||
+      !text.trim() ||
+      !["React", "JavaScript", "Node"].includes(topic)
+    ) {
+      // Handle validation error, e.g., set an error message
+      setMessage("Invalid input. Please check your title, text, and topic.");
+      return;
+    }
+
+    const payload = {
+      title: title.trim(),
+      text: text.trim(),
+      topic,
+    };
+    axiosWithAuth()
+      .put(`http://localhost:9000/api/articles/${article_id}`, payload)
+      .then((resp) => {
+        console.log(resp);
+        setMessage(resp.data.message);
+        getArticles(); // Refresh articles after successful update
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // ✨ implement
     // You got this!
   };
 
   const deleteArticle = (article_id) => {
-    // ✨ implement
+    axiosWithAuth(`http://localhost:9000/api/articles/${article_id}`)
+      .delete()
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log("deleteERR: ", err);
+      });
   };
 
   return (
