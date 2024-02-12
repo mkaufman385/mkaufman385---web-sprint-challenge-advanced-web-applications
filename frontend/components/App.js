@@ -153,10 +153,18 @@ export default function App() {
   };
 
   const deleteArticle = (article_id) => {
-    axiosWithAuth(`http://localhost:9000/api/articles/${article_id}`)
-      .delete()
+    const url = `http://localhost:9000/api/articles/${article_id}`;
+    console.log("Delete URL:", url);
+
+    axiosWithAuth()
+      .delete(`http://localhost:9000/api/articles/${article_id}`)
       .then((resp) => {
         console.log(resp);
+        const updatedArticles = articles.filter(
+          (article) => article.article_id !== article_id
+        );
+        setArticles(updatedArticles);
+        setMessage(resp.data.message);
       })
       .catch((err) => {
         console.log("deleteERR: ", err);

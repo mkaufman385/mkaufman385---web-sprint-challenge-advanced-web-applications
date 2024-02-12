@@ -14,6 +14,7 @@ export default function ArticleForm(
   // ✨ where are my props? Destructure them here
 
   useEffect(() => {
+    console.log("Current Article:", currentArticle);
     if (currentArticle) {
       setValues({
         title: currentArticle.title,
@@ -24,6 +25,7 @@ export default function ArticleForm(
       setValues(initialFormValues);
     }
   }, [currentArticle]);
+
   // ✨ implement
   // Every time the `currentArticle` prop changes, we should check it for truthiness:
   // if it's truthy, we should set its title, text and topic into the corresponding
@@ -86,7 +88,7 @@ export default function ArticleForm(
           Submit
         </button>
         {currentArticle && (
-          <button onClick={Function.prototype}>Cancel edit</button>
+          <button onClick={() => setCurrentArticleId(null)}>Cancel edit</button>
         )}
       </div>
     </form>
