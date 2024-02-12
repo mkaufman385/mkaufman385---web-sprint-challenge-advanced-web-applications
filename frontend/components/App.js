@@ -121,24 +121,24 @@ export default function App() {
   };
 
   const updateArticle = ({ article_id, article }) => {
-    const { title, text, topic } = article;
+    // const { title, text, topic } = article;
 
-    if (
-      !title.trim() ||
-      !text.trim() ||
-      !["React", "JavaScript", "Node"].includes(topic)
-    ) {
-      setMessage("Invalid input. Please check your title, text, and topic.");
-      return;
-    }
+    // if (
+    //   !title.trim() ||
+    //   !text.trim() ||
+    //   !["React", "JavaScript", "Node"].includes(topic)
+    // ) {
+    //   setMessage("Invalid input. Please check your title, text, and topic.");
+    //   return;
+    // }
 
-    const payload = {
-      title: title.trim(),
-      text: text.trim(),
-      topic,
-    };
+    // const payload = {
+    //   title: title.trim(),
+    //   text: text.trim(),
+    //   topic,
+    // };
     axiosWithAuth()
-      .put(`http://localhost:9000/api/articles/${article_id}`, payload)
+      .put(`http://localhost:9000/api/articles/${article_id}`, article)
       .then((resp) => {
         console.log(resp);
         setMessage(resp.data.message);
