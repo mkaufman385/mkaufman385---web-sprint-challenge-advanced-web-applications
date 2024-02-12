@@ -128,7 +128,6 @@ export default function App() {
       !text.trim() ||
       !["React", "JavaScript", "Node"].includes(topic)
     ) {
-      // Handle validation error, e.g., set an error message
       setMessage("Invalid input. Please check your title, text, and topic.");
       return;
     }
@@ -143,7 +142,11 @@ export default function App() {
       .then((resp) => {
         console.log(resp);
         setMessage(resp.data.message);
-        getArticles(); // Refresh articles after successful update
+        setArticles((articles) => {
+          return articles.map((art) => {
+            return art.article_id === article_id ? resp.data.article : art;
+          });
+        });
       })
       .catch((err) => {
         console.log(err);

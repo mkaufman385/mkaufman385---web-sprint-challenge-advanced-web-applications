@@ -88,7 +88,7 @@ export default function ArticleForm(
           Submit
         </button>
         {currentArticle && (
-          <button onClick={() => setCurrentArticleId(null)}>Cancel edit</button>
+          <button onClick={() => setCurrentArticleId()}>Cancel edit</button>
         )}
       </div>
     </form>
