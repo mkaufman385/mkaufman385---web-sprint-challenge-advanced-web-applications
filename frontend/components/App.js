@@ -47,17 +47,11 @@ export default function App() {
       .post(loginUrl, { username, password })
       .then((resp) => {
         localStorage.setItem("token", resp.data.token);
-        // console.log("Token1:", resp.data.token);
-        setMessage(resp.data.message);
-        // setSpinnerOn(false);
+        // setMessage(resp.data.message);
         redirectToArticles();
-        // setSpinnerOn(true);
-        // console.log("Token2:", resp.data.token);
       })
       .catch((err) => {
-        setMessage("resp.data.message");
-        // setSpinnerOn(false);
-        console.log("Error: ", err);
+        setMessage("Error: ", err);
       })
       .finally(() => {
         setSpinnerOn(false);
@@ -121,16 +115,16 @@ export default function App() {
   };
 
   const updateArticle = ({ article_id, article }) => {
-    // const { title, text, topic } = article;
+    const { title, text, topic } = article;
 
-    // if (
-    //   !title.trim() ||
-    //   !text.trim() ||
-    //   !["React", "JavaScript", "Node"].includes(topic)
-    // ) {
-    //   setMessage("Invalid input. Please check your title, text, and topic.");
-    //   return;
-    // }
+    if (
+      !title.trim() ||
+      !text.trim() ||
+      !["React", "JavaScript", "Node"].includes(topic)
+    ) {
+      setMessage("Invalid input. Please check your title, text, and topic.");
+      return;
+    }
 
     // const payload = {
     //   title: title.trim(),

@@ -11,6 +11,7 @@ export default function Articles(props) {
     setCurrentArticleId,
     currentArticleId,
   } = props;
+
   // console.log("Type of articles:", typeof articles);
   // ✨ where are my props? Destructure them here
 
