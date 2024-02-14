@@ -10,8 +10,8 @@ export default function ArticleForm(props) {
     setCurrentArticleId,
     currentArticle,
     currentArticleId,
-    articles,
-    setArticles,
+    // articles,
+    // setArticles,
   } = props;
   const [values, setValues] = useState(initialFormValues);
 
@@ -30,24 +30,24 @@ export default function ArticleForm(props) {
   // }, [currentArticle]);
 
   useEffect(() => {
-    console.log("useEffectcurrentArticleId:", currentArticleId);
-    console.log("useEffectarticles:", articles);
-    if (currentArticleId !== null && articles) {
-      const currentArticle = articles.find(
-        (article) => article.article_id === currentArticleId
-      );
+    // console.log("useEffectcurrentArticleId:", currentArticleId);
+    // console.log("useEffectarticles:", articles);
+    // if (currentArticleId !== null && articles) {
+    //   const currentArticle = articles.find(
+    //     (article) => article.article_id === currentArticleId
+    //   );
 
-      if (currentArticle) {
-        setValues({
-          title: currentArticle.title,
-          text: currentArticle.text,
-          topic: currentArticle.topic,
-        });
-      }
+    if (currentArticle) {
+      setValues({
+        title: currentArticle.title,
+        text: currentArticle.text,
+        topic: currentArticle.topic,
+      });
+      // }
     } else {
       setValues(initialFormValues);
     }
-  }, [currentArticleId, articles]);
+  }, [currentArticle]);
 
   const onChange = (evt) => {
     const { id, value } = evt.target;
@@ -68,22 +68,35 @@ export default function ArticleForm(props) {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    if (currentArticleId) {
-      if (currentArticle) {
-        updateArticle({
-          article_id: currentArticle.article_id,
-          article: values,
-        });
-        setCurrentArticleId(null);
-      } else {
-        console.error("currentArticle is undefined or null");
-      }
-    } else {
-      postArticle(values);
-    }
+    const article = {
+      title: values.title,
+      text: values.text,
+      topic: values.topic,
+    };
 
+    currentArticle
+      ? updateArticle({ article, article_id: currentArticle.article_id })
+      : postArticle(article);
+    setCurrentArticleId();
     setValues(initialFormValues);
   };
+
+  //   if (currentArticleId) {
+  //     if (currentArticle) {
+  //       updateArticle({
+  //         article_id: currentArticle.article_id,
+  //         article: values,
+  //       });
+  //       setCurrentArticleId(null);
+  //     } else {
+  //       console.error("currentArticle is undefined or null");
+  //     }
+  //   } else {
+  //     postArticle(values);
+  //   }
+
+  //   setValues(initialFormValues);
+  // };
 
   const isDisabled = () => {
     return Object.values(values).some((value) => value.trim() === "");
@@ -119,7 +132,7 @@ export default function ArticleForm(props) {
           Submit
         </button>
         {currentArticleId !== null && !currentArticle && (
-          <button onClick={() => setCurrentArticleId(null)}>Cancel edit</button>
+          <button onClick={() => setCurrentArticleId()}>Cancel edit</button>
         )}
       </div>
     </form>

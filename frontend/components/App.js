@@ -47,7 +47,7 @@ export default function App() {
       .post(loginUrl, { username, password })
       .then((resp) => {
         localStorage.setItem("token", resp.data.token);
-        // setMessage(resp.data.message);
+        setMessage(resp.data.message);
         redirectToArticles();
       })
       .catch((err) => {
@@ -73,6 +73,8 @@ export default function App() {
   // if it's a 401 the token might have gone bad, and we should redirect to login.
   // Don't forget to turn off the spinner!
   const getArticles = () => {
+    setSpinnerOn(true);
+    setMessage("");
     axiosWithAuth()
       .get(articlesUrl)
       .then((resp) => {
@@ -85,6 +87,9 @@ export default function App() {
         setMessage(err.message);
         setSpinnerOn(false);
         console.log("getArticleError: ", err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
       });
   };
 
@@ -97,6 +102,9 @@ export default function App() {
       .then((resp) => {
         // console.log("postArticleResp: ", resp);
         setMessage(resp.data.message);
+        setArticles((articles) => {
+          return articles.concat(resp.data.article);
+        });
         // Initialy removed getArticles cause it was causing a reresh which changed the message but having the getArticles here is what is allowing a new article to automatically be added to the list without page refresh
         getArticles();
       })
@@ -115,23 +123,20 @@ export default function App() {
   // to inspect the response from the server.
 
   const updateArticle = ({ article_id, article }) => {
-    const { title, text, topic } = article;
+    // const { title, text, topic } = article;
 
-    if (
-      !title.trim() ||
-      !text.trim() ||
-      !["React", "JavaScript", "Node"].includes(topic)
-    ) {
-      setMessage("Invalid input. Please check your title, text, and topic.");
-      return;
-    }
+    // if (
+    //   !title.trim() ||
+    //   !text.trim() ||
+    //   !["React", "JavaScript", "Node"].includes(topic)
+    // ) {
+    //   setMessage("Invalid input. Please check your title, text, and topic.");
+    //   return;
+    // }
+    setMessage("");
+    setSpinnerOn(true);
 
-    // const payload = {
-    //   title: title.trim(),
-    //   text: text.trim(),
-    //   topic,
-    // };
-    axiosWithAuth()
+    axios
       .put(`http://localhost:9000/api/articles/${article_id}`, article)
       .then((resp) => {
         console.log(resp);
@@ -144,6 +149,9 @@ export default function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
       });
     // ✨ implement
     // You got this!
@@ -152,19 +160,27 @@ export default function App() {
   const deleteArticle = (article_id) => {
     const url = `http://localhost:9000/api/articles/${article_id}`;
     console.log("Delete URL:", url);
+    setSpinnerOn(false);
+    setMessage("");
 
-    axiosWithAuth()
+    axios
       .delete(`http://localhost:9000/api/articles/${article_id}`)
       .then((resp) => {
         console.log(resp);
-        const updatedArticles = articles.filter(
-          (article) => article.article_id !== article_id
-        );
-        setArticles(updatedArticles);
+
+        setArticles((articles) => {
+          return articles.filter((article) => {
+            return article.article_id !== article_id;
+          });
+        });
+        // setArticles(updatedArticles);
         setMessage(resp.data.message);
       })
       .catch((err) => {
         console.log("deleteERR: ", err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
       });
   };
 
@@ -198,9 +214,9 @@ export default function App() {
                   postArticle={postArticle}
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
-                  currentArticleId={currentArticleId}
-                  articles={articles}
-                  setArticles={setArticles}
+                  currentArticle={articles.find(
+                    (art) => art.article_id == currentArticleId
+                  )}
                 />
                 <Articles
                   articles={articles}
