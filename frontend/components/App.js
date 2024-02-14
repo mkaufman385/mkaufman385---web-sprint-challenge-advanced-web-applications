@@ -65,6 +65,8 @@ export default function App() {
   };
 
   const getArticles = () => {
+    // setMessage("");
+    // setSpinnerOn(true);
     axiosWithAuth()
       .get(articlesUrl)
       .then((resp) => {
@@ -72,6 +74,7 @@ export default function App() {
 
         console.log("getArticlesResponse: ", resp.data.articles);
         setMessage(resp.data.message);
+        console.log("getArticlesMessage: ", resp.data.message);
       })
       .catch((err) => {
         redirectToLogin();
@@ -90,7 +93,7 @@ export default function App() {
   };
 
   const postArticle = (article) => {
-    // setMessage("");
+    setMessage("");
     setSpinnerOn(true);
 
     axiosWithAuth()
@@ -98,8 +101,8 @@ export default function App() {
       .then((resp) => {
         console.log("postArticleResp: ", resp);
         setMessage(resp.data.message);
+        console.log("postArticle MESSAGE: ", resp.data.message);
         getArticles();
-        // console.log("postArticleResp: ", resp);
       })
       .catch((err) => {
         setMessage(err.message);

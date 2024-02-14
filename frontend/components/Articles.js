@@ -12,6 +12,10 @@ export default function Articles(props) {
     currentArticleId,
   } = props;
 
+  const handleEditClick = (article_id) => {
+    setCurrentArticleId(article_id);
+  };
+
   // console.log("Type of articles:", typeof articles);
   // ✨ where are my props? Destructure them here
 
@@ -46,7 +50,7 @@ export default function Articles(props) {
                 <div>
                   <button
                     disabled={false}
-                    onClick={() => setCurrentArticleId(art.article_id)}
+                    onClick={() => handleEditClick(art.article_id)}
                   >
                     Edit
                   </button>

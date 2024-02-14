@@ -27,7 +27,7 @@ export default function LoginForm({ login }) {
     // trimmed password must be >= 8 for
     // the button to become enabled
     return (
-      values.username.trim().length <= 3 || values.password.trim().length <= 8
+      values.username.trim().length < 3 || values.password.trim().length < 8
     );
   };
 
