@@ -24,7 +24,7 @@ export default function Articles(props) {
 
   useEffect(() => {
     getArticles();
-    console.log("Articles UseEffect:", articles);
+    // console.log("Articles UseEffect:", articles);
     // ✨ grab the articles here, on first render only
   }, []);
 

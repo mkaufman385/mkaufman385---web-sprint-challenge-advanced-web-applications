@@ -64,17 +64,21 @@ export default function App() {
     // to the Articles screen. Don't forget to turn off the spinner!
   };
 
+  // ✨ implement
+  // We should flush the message state, turn on the spinner
+  // and launch an authenticated request to the proper endpoint.
+  // On success, we should set the articles in their proper state and
+  // put the server success message in its proper state.
+  // If something goes wrong, check the status of the response:
+  // if it's a 401 the token might have gone bad, and we should redirect to login.
+  // Don't forget to turn off the spinner!
   const getArticles = () => {
-    // setMessage("");
-    // setSpinnerOn(true);
     axiosWithAuth()
       .get(articlesUrl)
       .then((resp) => {
         setArticles(resp.data.articles);
 
-        console.log("getArticlesResponse: ", resp.data.articles);
         setMessage(resp.data.message);
-        console.log("getArticlesMessage: ", resp.data.message);
       })
       .catch((err) => {
         redirectToLogin();
@@ -82,14 +86,6 @@ export default function App() {
         setSpinnerOn(false);
         console.log("getArticleError: ", err);
       });
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch an authenticated request to the proper endpoint.
-    // On success, we should set the articles in their proper state and
-    // put the server success message in its proper state.
-    // If something goes wrong, check the status of the response:
-    // if it's a 401 the token might have gone bad, and we should redirect to login.
-    // Don't forget to turn off the spinner!
   };
 
   const postArticle = (article) => {
@@ -99,23 +95,24 @@ export default function App() {
     axiosWithAuth()
       .post(articlesUrl, article)
       .then((resp) => {
-        console.log("postArticleResp: ", resp);
+        // console.log("postArticleResp: ", resp);
         setMessage(resp.data.message);
-        console.log("postArticle MESSAGE: ", resp.data.message);
+        // Initialy removed getArticles cause it was causing a reresh which changed the message but having the getArticles here is what is allowing a new article to automatically be added to the list without page refresh
         getArticles();
       })
       .catch((err) => {
         setMessage(err.message);
-        console.log("postArticleErr: ", err);
+        // console.log("postArticleErr: ", err);
       })
       .finally(() => {
         setSpinnerOn(false);
       });
-    // ✨ implement
-    // The flow is very similar to the `getArticles` function.
-    // You'll know what to do! Use log statements or breakpoints
-    // to inspect the response from the server.
   };
+
+  // ✨ implement
+  // The flow is very similar to the `getArticles` function.
+  // You'll know what to do! Use log statements or breakpoints
+  // to inspect the response from the server.
 
   const updateArticle = ({ article_id, article }) => {
     const { title, text, topic } = article;
@@ -202,6 +199,8 @@ export default function App() {
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
                   currentArticleId={currentArticleId}
+                  articles={articles}
+                  setArticles={setArticles}
                 />
                 <Articles
                   articles={articles}
