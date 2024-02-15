@@ -43,8 +43,8 @@ export default function ArticleForm(props) {
         text: currentArticle.text,
         topic: currentArticle.topic,
       });
-      // }
     } else {
+      console.log("Current Article is null or undefined");
       setValues(initialFormValues);
     }
   }, [currentArticle]);
@@ -127,8 +127,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle" type="submit">
-          {/* {currentArticle ? "Submit" : "Create"}
-           */}
+          {/* {currentArticle ? "Submit" : "Create"} */}
           Submit
         </button>
         {currentArticleId !== null && !currentArticle && (
