@@ -126,7 +126,7 @@ export default function App() {
     setMessage("");
     setSpinnerOn(true);
 
-    axios
+    axiosWithAuth()
       .put(`http://localhost:9000/api/articles/${article_id}`, article)
       .then((resp) => {
         console.log(resp);
@@ -153,7 +153,7 @@ export default function App() {
     setSpinnerOn(false);
     setMessage("");
 
-    axios
+    axiosWithAuth()
       .delete(`http://localhost:9000/api/articles/${article_id}`)
       .then((resp) => {
         console.log(resp);
