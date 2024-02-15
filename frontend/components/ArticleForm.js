@@ -130,7 +130,7 @@ export default function ArticleForm(props) {
           {/* {currentArticle ? "Submit" : "Create"} */}
           Submit
         </button>
-        {currentArticleId !== null && !currentArticle && (
+        {currentArticle && (
           <button onClick={() => setCurrentArticleId()}>Cancel edit</button>
         )}
       </div>

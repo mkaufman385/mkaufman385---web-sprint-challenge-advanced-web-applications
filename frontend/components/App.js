@@ -106,7 +106,7 @@ export default function App() {
           return articles.concat(resp.data.article);
         });
         // Initialy removed getArticles cause it was causing a reresh which changed the message but having the getArticles here is what is allowing a new article to automatically be added to the list without page refresh
-        getArticles();
+        // getArticles();
       })
       .catch((err) => {
         setMessage(err.message);
@@ -123,16 +123,6 @@ export default function App() {
   // to inspect the response from the server.
 
   const updateArticle = ({ article_id, article }) => {
-    // const { title, text, topic } = article;
-
-    // if (
-    //   !title.trim() ||
-    //   !text.trim() ||
-    //   !["React", "JavaScript", "Node"].includes(topic)
-    // ) {
-    //   setMessage("Invalid input. Please check your title, text, and topic.");
-    //   return;
-    // }
     setMessage("");
     setSpinnerOn(true);
 
